@@ -1,13 +1,11 @@
 package com.zheng;
 
-import com.google.common.collect.Lists;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Administrator on 2017/4/16.
@@ -55,6 +53,11 @@ public class SortTest {
     @Test
     public void stackSort() {
         sortUtils.stackSort(arr);
+    }
+    
+    @Test
+    public void mergeSort() {
+        sortUtils.mergeSort(arr);
     }
     
 }

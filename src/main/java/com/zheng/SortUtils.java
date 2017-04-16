@@ -139,4 +139,63 @@ public class SortUtils {
 	private boolean compare(int a, int b) {
 		return a < b;
 	}
+
+	/**
+	 * 归并排序
+	 * 将排序进行分治,分而治之：分将元素分成几部分进行排序，治：将排序好的几部分组装起来
+	 * 将对所有元素的排序分成两部分进行排序，然后合并，每一部分又进行划分，如此递归
+	 * 对每一部分先进行排序，完成后再将两部分合并起来
+	 * @param arr
+	 */
+	public void mergeSort(Integer[] arr) {
+		Integer[] tmpArr = new Integer[arr.length];
+		mergeSort(arr, tmpArr, 0, arr.length - 1);
+	}
+	
+	private void mergeSort(Integer[] arr, Integer[] tmpArr, int left, int right) {
+		if(left < right) {
+			int center = (left + right) / 2;
+			mergeSort(arr, tmpArr, left, center);
+			mergeSort(arr, tmpArr, center+1, right);
+			merge(arr, tmpArr, left, center+1, right);
+		}
+	}
+
+	/**
+	 * 合并两部分
+	 * @param arr
+	 * @param tmpArr
+	 * @param leftStart 左边部分开始索引
+	 * @param rightStart 右边部分开始索引
+	 * @param rightEnd
+	 */
+	private void merge(Integer[] arr, Integer[] tmpArr, int leftStart, int rightStart, int rightEnd) {
+		int leftEnd = rightStart - 1;
+		int tmpIndex = leftStart;
+		int num = rightEnd - leftStart + 1;
+		
+		while(leftStart <= leftEnd && rightStart <= rightEnd) {
+			if(compare(arr[leftStart], arr[rightStart])) {
+				tmpArr[tmpIndex++] = arr[leftStart++];
+			}else {
+				tmpArr[tmpIndex++] = arr[rightStart++];
+			}
+		}
+	
+		//处理多余的部分
+		while(leftStart <= leftEnd) {
+			tmpArr[tmpIndex++] = arr[leftStart++];
+		}
+		
+		while(rightStart <= rightEnd) {
+			tmpArr[tmpIndex++] = arr[rightStart++];
+		}
+		
+		//最后将tmp中的值拷贝回原来表,只有rightEnd没有变，所以用它来进行拷贝
+		int index;
+		for(int i = 0; i <num; i++) {
+			index = rightEnd--;
+			arr[index] = tmpArr[index];
+		}
+	}
 }
