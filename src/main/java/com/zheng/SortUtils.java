@@ -5,6 +5,8 @@ package com.zheng;
  * 插入排序
  * 希尔排序
  * 堆排序
+ * 归并排序
+ * 快速排序
  */
 public class SortUtils {
 	
@@ -15,7 +17,6 @@ public class SortUtils {
 	 * 如果数组中元素大于当前待插入的元素，那么将数组中的元素向后移动一位
 	 * 继续与前一个数组中的元素比较，直到找到一个合适的位置，将元素插入进去
 	 *
-	 * @param arr
 	 */
 	public void insertSort(Integer[] arr) {
 		if (null == arr || arr.length <= 1) {
@@ -27,7 +28,7 @@ public class SortUtils {
 			tmp = arr[i];
 			j = i - 1;
 			for (; j >= 0; j--) {
-				if (arr[j] > tmp) {
+				if (compare(arr[j], tmp)) {
 					arr[j + 1] = arr[j];
 				} else {
 					break;
@@ -43,7 +44,6 @@ public class SortUtils {
 	 * gap减小,继续上面操作，直到gap=0
 	 * 建议gap = N / 2; gap /= 2;
 	 *
-	 * @param arr
 	 */
 	public void shellSort(Integer[] arr) {
 		if (null == arr || arr.length <= 1) {
@@ -74,9 +74,11 @@ public class SortUtils {
 	 * 对于堆排序，如果是顺序，则建立最大堆，然后取出根元素，递归
 	 * 如果是逆序，则建立最小堆，然后取出根元素，递归
 	 *
-	 * @param arr
 	 */
 	public void stackSort(Integer[] arr) {
+		if(null == arr || arr.length <= 1) {
+			return;
+		}
 		// 留出第一个位置，
 		// 便于根据索引下标计算堆节点的父节点、左右儿子节点
 		Integer[] newarr = new Integer[arr.length + 1];
@@ -87,7 +89,7 @@ public class SortUtils {
 		
 		for (int i = newarr.length - 1; i >= 1; i--) { //要建堆的元素个数
 			buildStack(newarr, i); //建堆
-			deleteNode(newarr, i); //移除最大的那个元素
+			moveToEnd(newarr, i); //移除最大的那个元素
 		}
 		
 		for (int i = 1; i < newarr.length; i++) {
@@ -98,10 +100,10 @@ public class SortUtils {
 	/**
 	 * 删除节点，其实是将首尾位元素相互换位置
 	 *
-	 * @param newarr
-	 * @param i
+	 * @param newarr 堆数组
+	 * @param i 当前最大最小值需要放置的下标位置
 	 */
-	private void deleteNode(Integer[] newarr, int i) {
+	private void moveToEnd(Integer[] newarr, int i) {
 		int tmp = newarr[i];
 		newarr[i] = newarr[1];
 		newarr[1] = tmp;
@@ -111,8 +113,8 @@ public class SortUtils {
 	/**
 	 * 对给定数组范围的元素建堆，这里是构建最大堆(根节点上的值大于其儿子的值)
 	 *
-	 * @param arr
-	 * @param end
+	 * @param arr 原始数组
+	 * @param end 建堆元素从下标1到end之间的元素，这里主要是作为建堆元素的个数限制
 	 */
 	private void buildStack(Integer[] arr, int end) {
 		int tmp, parent, cur;
@@ -131,10 +133,6 @@ public class SortUtils {
 	
 	/**
 	 * 这里改变比较策略，转换排序方式：正序、逆序
-	 *
-	 * @param a
-	 * @param b
-	 * @return
 	 */
 	private boolean compare(int a, int b) {
 		return a < b;
@@ -145,9 +143,11 @@ public class SortUtils {
 	 * 将排序进行分治,分而治之：分将元素分成几部分进行排序，治：将排序好的几部分组装起来
 	 * 将对所有元素的排序分成两部分进行排序，然后合并，每一部分又进行划分，如此递归
 	 * 对每一部分先进行排序，完成后再将两部分合并起来
-	 * @param arr
 	 */
 	public void mergeSort(Integer[] arr) {
+		if(null == arr || arr.length <= 1) {
+			return;
+		}
 		Integer[] tmpArr = new Integer[arr.length];
 		mergeSort(arr, tmpArr, 0, arr.length - 1);
 	}
@@ -163,13 +163,16 @@ public class SortUtils {
 
 	/**
 	 * 合并两部分
-	 * @param arr
-	 * @param tmpArr
+	 * @param arr 原始排序数组
+	 * @param tmpArr 临时表用于缓存中间排序结果
 	 * @param leftStart 左边部分开始索引
 	 * @param rightStart 右边部分开始索引
-	 * @param rightEnd
+	 * @param rightEnd 右边部分结束索引
 	 */
 	private void merge(Integer[] arr, Integer[] tmpArr, int leftStart, int rightStart, int rightEnd) {
+		if(null == arr || arr.length <= 1) {
+			return;
+		}
 		int leftEnd = rightStart - 1;
 		int tmpIndex = leftStart;
 		int num = rightEnd - leftStart + 1;
@@ -196,6 +199,46 @@ public class SortUtils {
 		for(int i = 0; i <num; i++) {
 			index = rightEnd--;
 			arr[index] = tmpArr[index];
+		}
+	}
+
+	/**
+	 * 快速排序
+	 * 找到一个元素，以该元素为基准，将比他小的放在一起
+	 * 比他大的放在一起，形成两部分，递归
+	 * @param arr
+	 */
+	public void quickSort(Integer[] arr) {
+		if(null == arr || arr.length <= 1) {
+			return;
+		}
+		
+		quickSort(arr, 0, arr.length - 1);
+	}
+
+	private void quickSort(Integer[] arr, int start, int end) {
+		if(start < end) {
+			int i = start;
+			int j = end;
+			int x = arr[i]; //将第一个元素作为驱动元，查找到<x的放左边，>x的放右边
+			while(i < j) {
+				while(i < j && arr[j] >= x) {
+					j--;
+				}
+				if(i < j) {
+					arr[i++] = arr[j];
+				}
+
+				while(i < j && arr[i] <= x) {
+					i++;
+				}
+				if(i < j) {
+					arr[j--] = arr[i];
+				}
+			}
+			arr[i] = x; //将驱动元放入中值位置
+			quickSort(arr, start, i-1); //继续排序左边部分
+			quickSort(arr, i+1, end); //继续排序右边部分
 		}
 	}
 }

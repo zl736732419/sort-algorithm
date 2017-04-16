@@ -60,4 +60,9 @@ public class SortTest {
         sortUtils.mergeSort(arr);
     }
     
+    @Test
+    public void quickSort() {
+        sortUtils.quickSort(arr);
+    }
+    
 }
