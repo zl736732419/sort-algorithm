@@ -19,16 +19,19 @@ public class SortTest {
     
     @Before
     public void init() {
-        List<Integer> nums = Lists.newArrayList();
-        int num;
-        for(int i = 0; i < 10; i++) {
-            num = new Random().nextInt(10);
-            while(nums.contains(num)) {
-                num = new Random().nextInt(10);
-            }
-            nums.add(num);
-        }
-        arr = nums.toArray(new Integer[nums.size()]);
+//        List<Integer> nums = Lists.newArrayList();
+//        int num;
+//        for(int i = 0; i < 10; i++) {
+//            num = new Random().nextInt(10);
+//            while(nums.contains(num)) {
+//                num = new Random().nextInt(10);
+//            }
+//            nums.add(num);
+//        }
+//        
+//        arr = nums.toArray(new Integer[nums.size()]);
+    
+        arr = new Integer[] {5,6,8,4,2,0,3,1,9,7};
         
         sortUtils = new SortUtils();
     }
