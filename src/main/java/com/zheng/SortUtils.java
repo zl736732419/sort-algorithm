@@ -106,9 +106,7 @@ public class SortUtils {
 	 * @param i 当前最大最小值需要放置的下标位置
 	 */
 	private void moveToEnd(Integer[] newarr, int i) {
-		int tmp = newarr[i];
-		newarr[i] = newarr[1];
-		newarr[1] = tmp;
+		swap(newarr, i, 1);
 	}
 	
 	
@@ -124,9 +122,8 @@ public class SortUtils {
 			cur = i;
 			tmp = arr[cur];
 			parent = i / 2;
-			while (parent >= 1 && compare(tmp, arr[parent])) {
-				arr[cur] = arr[parent];
-				arr[parent] = tmp;
+			while (parent >= 1 && compare(arr[parent], tmp)) {
+				swap(arr, cur, parent);
 				cur = parent;
 				parent /= 2;
 			}
