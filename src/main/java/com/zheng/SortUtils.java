@@ -244,13 +244,17 @@ public class SortUtils {
 
 	/**
 	 * 冒泡排序,升序排列
-	 * @param arrs
+	 * @param arr
 	 */
-	public void bubbleSort(Integer[] arrs) {
-		for(int i = 0; i < arrs.length; i++) {
-			for(int j = i + 1; j < arrs.length; j++) {
-				if (arrs[i] > arrs[j]) {
-				    swap(arrs, i, j);
+	public void bubbleSort(Integer[] arr) {
+		if (null == arr || arr.length <= 1) {
+			return;
+		}
+		
+		for(int i = 0; i < arr.length; i++) {
+			for(int j = i + 1; j < arr.length; j++) {
+				if (arr[i] > arr[j]) {
+				    swap(arr, i, j);
 				}					
 			}
 		}
@@ -258,14 +262,14 @@ public class SortUtils {
 
 	/**
 	 * 位算法交换两者位置
-	 * @param arrs
+	 * @param arr
 	 * @param from
 	 * @param to
 	 */
-	private void swap(Integer[] arrs, int from, int to) {
-		arrs[from] = arrs[from] ^ arrs[to];
-		arrs[to] = arrs[from] ^ arrs[to];
-		arrs[from] = arrs[from] ^ arrs[to];
+	private void swap(Integer[] arr, int from, int to) {
+		arr[from] = arr[from] ^ arr[to];
+		arr[to] = arr[from] ^ arr[to];
+		arr[from] = arr[from] ^ arr[to];
 	}
 	
 }
