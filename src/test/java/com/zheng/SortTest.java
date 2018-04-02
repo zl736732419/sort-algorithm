@@ -70,4 +70,8 @@ public class SortTest {
         sortUtils.bubbleSort(arr);
     }
     
+    @Test
+    public void selectSort() {
+        sortUtils.selectSort(arr);
+    }
 }
