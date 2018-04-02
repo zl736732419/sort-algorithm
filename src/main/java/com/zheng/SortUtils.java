@@ -208,8 +208,8 @@ public class SortUtils {
 
 	/**
 	 * 快速排序
-	 * 找到一个元素，以该元素为基准，将比他小的放在一起
-	 * 比他大的放在一起，形成两部分，递归
+	 * 找到一个元素，以该元素为基准，将比他小的放在一边
+	 * 比他大的放在另一边，形成两部分，递归
 	 * @param arr
 	 */
 	public void quickSort(Integer[] arr) {
@@ -224,19 +224,19 @@ public class SortUtils {
 		if(start < end) {
 			int i = start;
 			int j = end;
-			int x = arr[i]; //将第一个元素作为驱动元，查找到<x的放左边，>x的放右边
-			while(i < j) {
+			int x = arr[i];
+			while(i < j) { // 一轮排序，将第一个元素作为驱动元，查找到<x的放左边，>x的放右边
 				while(i < j && arr[j] >= x) {
 					j--;
 				}
-				if(i < j) {
+				if(i < j) { // 小于当前元素的放左边
 					arr[i++] = arr[j];
 				}
 
 				while(i < j && arr[i] <= x) {
 					i++;
 				}
-				if(i < j) {
+				if(i < j) { // 大于当前元素的放右边
 					arr[j--] = arr[i];
 				}
 			}
