@@ -241,4 +241,31 @@ public class SortUtils {
 			quickSort(arr, i+1, end); //继续排序右边部分
 		}
 	}
+
+	/**
+	 * 冒泡排序,升序排列
+	 * @param arrs
+	 */
+	public void bubbleSort(Integer[] arrs) {
+		for(int i = 0; i < arrs.length; i++) {
+			for(int j = i + 1; j < arrs.length; j++) {
+				if (arrs[i] > arrs[j]) {
+				    swap(arrs, i, j);
+				}					
+			}
+		}
+	}
+
+	/**
+	 * 位算法交换两者位置
+	 * @param arrs
+	 * @param from
+	 * @param to
+	 */
+	private void swap(Integer[] arrs, int from, int to) {
+		arrs[from] = arrs[from] ^ arrs[to];
+		arrs[to] = arrs[from] ^ arrs[to];
+		arrs[from] = arrs[from] ^ arrs[to];
+	}
+	
 }

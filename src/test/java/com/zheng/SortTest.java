@@ -29,7 +29,7 @@ public class SortTest {
 //        
 //        arr = nums.toArray(new Integer[nums.size()]);
     
-        arr = new Integer[] {5,6,8,4,2,0,3,1,9,7};
+        arr = new Integer[] {5,6,8,3,2,0,3,1,9,7};
         
         sortUtils = new SortUtils();
     }
@@ -63,6 +63,11 @@ public class SortTest {
     @Test
     public void quickSort() {
         sortUtils.quickSort(arr);
+    }
+    
+    @Test
+    public void bubbleSort() {
+        sortUtils.bubbleSort(arr);
     }
     
 }
