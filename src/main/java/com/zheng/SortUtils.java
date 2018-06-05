@@ -253,7 +253,8 @@ public class SortUtils {
 		if (null == arr || arr.length <= 1) {
 			return;
 		}
-		
+
+		// 位置i存储当次最小或最大值
 		for(int i = 0; i < arr.length; i++) {
 			for(int j = i + 1; j < arr.length; j++) {
 				if (arr[i] > arr[j]) {
@@ -277,6 +278,7 @@ public class SortUtils {
 
     /**
      * 选择排序
+	 * 与冒泡排序是一个意思，只不过选择排序不会在每次比较就开始交换位置，它只记录最小或者最大值所在的位置
      * 每次排序都是针对某一个位置而言的，主要是找这个序列中最小或最大的元素放在当前位置，
      * 然后继续往后对下一个位置进行选择排序，而序列也在每次的处理中减少一个元素
      * @param arr
