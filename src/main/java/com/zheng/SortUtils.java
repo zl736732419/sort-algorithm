@@ -1,5 +1,7 @@
 package com.zheng;
 
+import java.util.*;
+
 /**
  * 包含几种常用的排序算法
  * 插入排序
@@ -18,6 +20,7 @@ public class SortUtils {
 	 * 分别与数组中已经存在的元素进行比较。
 	 * 如果数组中元素大于当前待插入的元素，那么将数组中的元素向后移动一位
 	 * 继续与前一个数组中的元素比较，直到找到一个合适的位置，将元素插入进去
+	 * 时间复杂度：O(n^2), 空间复杂度: O(n)
 	 *
 	 */
 	public void insertSort(Integer[] arr) {
@@ -85,15 +88,17 @@ public class SortUtils {
 		// 便于根据索引下标计算堆节点的父节点、左右儿子节点
 		Integer[] newarr = new Integer[arr.length + 1];
 		newarr[0] = 0;
-		for (int i = 0; i < arr.length; i++) {
-			newarr[i + 1] = arr[i];
-		}
+//		for (int i = 0; i < arr.length; i++) {
+//			newarr[i + 1] = arr[i];
+//		}
+		System.arraycopy(arr, 0, newarr, 1, arr.length);
 		
 		for (int i = newarr.length - 1; i >= 1; i--) { //要建堆的元素个数
 			buildStack(newarr, i); //建堆
 			moveToEnd(newarr, i); //移除最大的那个元素
 		}
-		
+
+		// 翻转顺序
 		for (int i = 1; i < newarr.length; i++) {
 			arr[i - 1] = newarr[i];
 		}
@@ -112,6 +117,7 @@ public class SortUtils {
 	
 	/**
 	 * 对给定数组范围的元素建堆，这里是构建最大堆(根节点上的值大于其儿子的值)
+	 * 建堆思想：与父节点进行比较。将值比较大的放到父节点上。
 	 *
 	 * @param arr 原始数组
 	 * @param end 建堆元素从下标1到end之间的元素，这里主要是作为建堆元素的个数限制
@@ -247,6 +253,15 @@ public class SortUtils {
 
 	/**
 	 * 冒泡排序,升序排列
+	 * 时间复杂度：
+	 * 共k个值，最坏情况下排序如下：
+	 * 第1个 比较k-1次
+	 * 第2个 比较k-2次
+	 * ...
+	 * 第k-1个 比较1次
+	 * 所以 1+2+3+...+k-1 = (1+k-1)*(k-1)/2 = O(k^2)
+	 * 空间复杂度：
+	 * 整个排序过程中没有借助其他内存空间，就地进行排序，O(n)
 	 * @param arr
 	 */
 	public void bubbleSort(Integer[] arr) {
@@ -281,6 +296,7 @@ public class SortUtils {
 	 * 与冒泡排序是一个意思，只不过选择排序不会在每次比较就开始交换位置，它只记录最小或者最大值所在的位置
      * 每次排序都是针对某一个位置而言的，主要是找这个序列中最小或最大的元素放在当前位置，
      * 然后继续往后对下一个位置进行选择排序，而序列也在每次的处理中减少一个元素
+	 * 时间复杂度：O(n^2)，空间复杂度O(n)
      * @param arr
      */
     public void selectSort(Integer[] arr) {
@@ -303,6 +319,51 @@ public class SortUtils {
             }
         }
     }
-	
+
+	/**
+	 * 基数排序
+	 * 根据个、十、百...位进行排序
+	 * @param arr
+	 */
+    public void radixSort(Integer[] arr) {
+    	if (null == arr || arr.length == 1) {
+    		return;
+		}
+
+    	int maxLength = 0; // 最大位数
+    	for (Integer num : arr) {
+    		int length = num.toString().length();
+    		if (length > maxLength) {
+    			maxLength = length;
+			}
+		}
+
+    	Map<Integer, List<Integer>> temp = new HashMap<>();
+
+    	for (int i = 1; i <= maxLength; i++) {
+			TreeSet<Integer> numberSet = new TreeSet<>();
+
+			// 根据位上的数值分桶
+			for (Integer num : arr) {
+				int number = (int) (num / Math.pow(10,(i-1)) % 10); // 求个、十、百...位上的数值
+				List<Integer> numbers = temp.get(number);
+				if (numbers == null) {
+					numbers = new ArrayList<>();
+					temp.put(number, numbers);
+				}
+				numbers.add(num);
+				numberSet.add(number);
+			}
+
+			// 按照位上的数值排序
+			int index = 0;
+			for (Integer number : numberSet) {
+				List<Integer> numbers = temp.get(number);
+				for (Integer num : numbers) {
+					arr[index++] = num;
+				}
+			}
+		}
+	}
 	
 }

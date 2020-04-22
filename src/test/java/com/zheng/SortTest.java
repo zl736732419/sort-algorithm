@@ -74,4 +74,9 @@ public class SortTest {
     public void selectSort() {
         sortUtils.selectSort(arr);
     }
+
+    @Test
+    public void radixSort() {
+        sortUtils.radixSort(arr);
+    }
 }
