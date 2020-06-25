@@ -223,10 +223,10 @@ public class SortUtils {
 			return;
 		}
 		
-		quickSort(arr, 0, arr.length - 1);
+		doQuickSort(arr, 0, arr.length - 1);
 	}
 
-	private void quickSort(Integer[] arr, int start, int end) {
+	private void doQuickSort(Integer[] arr, int start, int end) {
 		if(start < end) {
 			int i = start;
 			int j = end;
@@ -247,8 +247,8 @@ public class SortUtils {
 				}
 			}
 			arr[i] = x; //将驱动元放入中值位置
-			quickSort(arr, start, i-1); //继续排序左边部分
-			quickSort(arr, i+1, end); //继续排序右边部分
+			doQuickSort(arr, start, i-1); //继续排序左边部分
+			doQuickSort(arr, i+1, end); //继续排序右边部分
 		}
 	}
 
@@ -346,7 +346,7 @@ public class SortUtils {
 
 			// 根据位上的数值分桶
 			for (Integer num : arr) {
-				int number = (int) (num / Math.pow(10,(i-1)) % 10); // 求个、十、百...位上的数值
+				int number = (int) (num / Math.pow(10,(i-1)) % 10); // 求个、十、百...位上的数值，并按照0-9进行分桶
 				List<Integer> numbers = temp.get(number);
 				if (numbers == null) {
 					numbers = new ArrayList<>();
